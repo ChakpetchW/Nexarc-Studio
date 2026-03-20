@@ -654,9 +654,9 @@ footer {
 .cap-card:hover { border-color: var(--accent-mid); background: rgba(200,16,46,0.06); transform: translateY(-6px); }
 .cap-icon { font-size: 2rem; margin-bottom: 20px; }
 .tech-marquee-wrapper { overflow: hidden; padding: 0; }
-.tech-marquee-track { display: flex; gap: 48px; animation: techMarquee 25s linear infinite; width: max-content; }
+.tech-marquee-track { display: flex; animation: techMarquee 30s linear infinite; width: max-content; }
 @keyframes techMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.tech-logo-item { display: flex; flex-direction: column; align-items: center; gap: 8px; filter: grayscale(1) brightness(0.5); transition: 0.3s; cursor: default; }
+.tech-logo-item { display: flex; flex-direction: column; align-items: center; gap: 8px; filter: grayscale(1) brightness(0.5); transition: 0.3s; cursor: default; margin-right: 60px; }
 .tech-logo-item:hover { filter: grayscale(0) brightness(1); transform: translateY(-4px); }
 .tech-logo-item .tl-icon { width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); }
 .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
