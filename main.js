@@ -28,7 +28,7 @@ const revealObserver = new IntersectionObserver((entries) => {
       entry.target.classList.add('visible');
     }
   });
-}, { threshold: 0.12 });
+}, { threshold: 0.05 });
 
 document.querySelectorAll('.reveal, .reveal-left, .reveal-img').forEach(el => {
   revealObserver.observe(el);
