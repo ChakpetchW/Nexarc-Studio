@@ -93,7 +93,7 @@ body::before {
   height: var(--nav-h);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* Center the main content */
   padding: 0 48px;
   z-index: 1000;
   background: rgba(14,14,14,0.85);
@@ -102,13 +102,15 @@ body::before {
   transition: background 0.3s;
 }
 .navbar .logo {
+  position: absolute; /* Pull logo out of flex flow to let links center perfectly */
+  left: 48px;
   font-family: 'Inter', sans-serif;
   font-weight: 900;
   font-size: 1.25rem;
   color: var(--text-headline);
   text-decoration: none;
   letter-spacing: -0.02em;
-  white-space: nowrap; /* Prevent logo wrapping */
+  white-space: nowrap;
 }
 .navbar .logo span {
   background: var(--gradient);
@@ -125,9 +127,9 @@ body::before {
 .nav-links a {
   color: var(--text-body);
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 1.15rem; /* Increased font size */
   font-family: 'Prompt', sans-serif;
-  font-weight: 500;
+  font-weight: 600; /* Slightly bolder */
   transition: color 0.2s;
   position: relative;
 }
@@ -681,7 +683,11 @@ footer {
 
 @media (max-width: 991px) {
   .navbar { padding: 0 24px; }
-  .nav-links { display: none !important; }
+  .nav-links { 
+    display: flex !important; /* Changed from none to flex */
+    justify-content: center; /* Centered nav-links */
+    font-size: 1.2rem; /* Increased font size */
+  }
   .navbar-toggle {
     display: flex;
     flex-direction: column;
