@@ -249,13 +249,18 @@
           tags: document.getElementById('tags').value.split(',').map(t => t.trim()).filter(t => t)
         };
 
+        // Debug Alert
+        console.log('ข้อมูลที่จะส่งไป Supabase:', projectData);
+
         if (editingId) {
-          const { error } = await supabaseClient.from('projects').update(projectData).eq('id', editingId);
+          const { data, error } = await supabaseClient.from('projects').update(projectData).eq('id', editingId).select();
           if (error) throw error;
+          console.log('ผลลัพธ์จาก Supabase (Update):', data);
           showStatus('อัปเดตผลงานสำเร็จ!', 'success');
         } else {
-          const { error } = await supabaseClient.from('projects').insert([projectData]);
+          const { data, error } = await supabaseClient.from('projects').insert([projectData]).select();
           if (error) throw error;
+          console.log('ผลลัพธ์จาก Supabase (Insert):', data);
           showStatus('บันทึกผลงานสำเร็จ!', 'success');
         }
 
