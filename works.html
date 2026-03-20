@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ผลงานของ Nexarc Studio — Web Application ติดตามราคาของสะสม, Enterprise E-Learning Platform, High-Ticket Sales Landing Page">
+  <meta name="description" content="ผลงานของ Nexarc Studio — Web Application และ WordPress Solutions ระดับพรีเมียม">
   <title>Selected Works — Nexarc Studio</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -46,20 +46,12 @@
   <hr class="fancy">
 
   <!-- Projects -->
-              <span class="meta-label">ผลลัพธ์</span>
-              <span class="meta-val">CVR เพิ่มขึ้น 3.2×</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">ระยะเวลา</span>
-              <span class="meta-val">3 สัปดาห์</span>
-            </div>
-          </div>
-          <span class="magnetic-btn">
-            <a href="contact.html" class="btn-primary">สนใจโปรเจกต์คล้ายกัน →</a>
-          </span>
-        </div>
+  <section style="padding-top:60px; min-height: 400px;">
+    <div class="container" id="projectList">
+      <!-- Dynamic Projects will be injected here -->
+      <div id="loading" style="text-align:center; padding: 100px 0;">
+        <p style="color:var(--text-body);">กำลังโหลดผลงาน...</p>
       </div>
-
     </div>
   </section>
 
@@ -92,6 +84,81 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="main.js"></script>
+  <script>
+    const supabaseUrl = 'https://dmlmntzgqfygmbxenywk.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtbG1udHpncWZ5Z21ieGVueXdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwMDI2OTEsImV4cCI6MjA4OTU3ODY5MX0.GEeyFyfxng9KoOfs6Ojvrv0oGFfU0RYDE0L4B4bv-oI';
+    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+    async function fetchProjects() {
+      const container = document.getElementById('projectList');
+      
+      try {
+        const { data: projects, error } = await supabaseClient
+          .from('projects')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        container.innerHTML = ''; // Clear loading
+
+        if (!projects || projects.length === 0) {
+          container.innerHTML = `
+            <div style="text-align:center; padding: 100px 0;">
+              <h3 style="margin-bottom:16px;">ยังไม่มีผลงานในระบบ</h3>
+              <p style="color:var(--text-body); margin-bottom: 24px;">คุณสามารถเพิ่มผลงานใหม่ได้ผ่านทางหน้า Admin</p>
+              <a href="contact.html" class="btn-primary">สนใจร่วมงานกับเรา →</a>
+            </div>
+          `;
+          return;
+        }
+
+        projects.forEach((proj, index) => {
+          const isReverse = index % 2 !== 0;
+          const num = (index + 1).toString().padStart(2, '0');
+          const tagsStr = proj.tags ? proj.tags.join(' / ') : proj.category;
+          
+          const projectHTML = `
+            <div class="project-block ${isReverse ? 'reverse' : ''}">
+              <div class="project-image-wrap reveal-img">
+                <img src="${proj.image_url || 'assets/images/placeholder.png'}" alt="${proj.title}">
+                <div class="project-overlay"></div>
+              </div>
+              <div class="project-content">
+                <div class="project-num">${num}</div>
+                <div class="project-tag">${tagsStr}</div>
+                <h2>${proj.title}</h2>
+                <p>${proj.description}</p>
+                <div class="project-meta">
+                  <div class="meta-item">
+                    <span class="meta-label">หมวดหมู่</span>
+                    <span class="meta-val">${proj.category || 'Architecture'}</span>
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-label">วันที่</span>
+                    <span class="meta-val">${new Date(proj.created_at).toLocaleDateString('th-TH', { month: 'long', year: 'numeric' })}</span>
+                  </div>
+                </div>
+                <span class="magnetic-btn">
+                  <a href="${proj.project_url || 'contact.html'}" class="btn-primary">
+                    ${proj.project_url ? 'ดูหน้าเว็บจริง →' : 'สนใจโปรเจกต์คล้ายกัน →'}
+                  </a>
+                </span>
+              </div>
+            </div>
+          `;
+          container.insertAdjacentHTML('beforeend', projectHTML);
+        });
+
+      } catch (err) {
+        console.error('Error fetching projects:', err);
+        container.innerHTML = '<p style="text-align:center; padding:100px 0; color:var(--accent-start);">ขออภัย เกิดข้อผิดพลาดในการโหลดข้อมูล</p>';
+      }
+    }
+
+    fetchProjects();
+  </script>
 </body>
 </html>
