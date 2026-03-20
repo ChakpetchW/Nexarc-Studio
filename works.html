@@ -143,7 +143,7 @@
                   </div>
                 </div>
                 <span class="magnetic-btn">
-                  <a href="${proj.project_url || 'contact.html'}" class="btn-primary">
+                  <a href="${proj.project_url || 'contact.html'}" class="btn-primary" ${proj.project_url ? 'target="_blank"' : ''}>
                     ${proj.project_url ? 'ดูหน้าเว็บจริง →' : 'สนใจโปรเจกต์คล้ายกัน →'}
                   </a>
                 </span>
