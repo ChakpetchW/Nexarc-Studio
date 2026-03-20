@@ -164,33 +164,40 @@
       loadProjects();
     }
 
+    let projectsData = []; // Store current projects globaly for easy access
+
     async function loadProjects() {
       const tbody = document.getElementById('projectListBody');
       const { data, error } = await supabaseClient.from('projects').select('*').order('created_at', { ascending: false });
       
-      if (error) return showStatus('โหลดข้อมูลไม่สำเร็จ', 'error');
+      if (error) {
+        console.error('Supabase Load Error:', error);
+        return showStatus('โหลดข้อมูลไม่สำเร็จ', 'error');
+      }
       
-      tbody.innerHTML = data.map(p => `
+      projectsData = data;
+      tbody.innerHTML = data.map((p, index) => `
         <tr>
           <td><img src="${p.image_url}" class="thumb-preview"></td>
           <td>${p.title}</td>
           <td>${p.project_date || 'N/A'}</td>
           <td>
-            <button class="btn-edit" onclick='editProject(${JSON.stringify(p).replace(/'/g, "&apos;")})'>แก้ไข</button>
+            <button class="btn-edit" onclick="prepareEdit(${index})">แก้ไข</button>
             <button class="btn-delete" onclick="deleteProject('${p.id}')">ลบ</button>
           </td>
         </tr>
       `).join('');
     }
 
-    function editProject(p) {
+    function prepareEdit(index) {
+      const p = projectsData[index];
       document.getElementById('editingId').value = p.id;
       document.getElementById('title').value = p.title;
       document.getElementById('category').value = p.category;
       document.getElementById('description').value = p.description;
       document.getElementById('project_url').value = p.project_url || '';
       document.getElementById('project_date').value = p.project_date || '';
-      document.getElementById('tags').value = p.tags ? p.tags.join(', ') : '';
+      document.getElementById('tags').value = (p.tags && Array.isArray(p.tags)) ? p.tags.join(', ') : '';
       document.getElementById('existingImageUrl').value = p.image_url;
       
       document.getElementById('formTitle').innerText = 'แก้ไขผลงาน: ' + p.title;
@@ -198,7 +205,7 @@
       document.getElementById('submitBtn').innerText = 'อัปเดตผลงาน';
       document.getElementById('imageFile').required = false;
       
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function resetForm() {
