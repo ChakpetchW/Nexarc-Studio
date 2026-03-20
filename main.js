@@ -70,3 +70,24 @@ staggerEls.forEach((el, i) => {
   el.classList.add('stagger-init');
   requestAnimationFrame(() => el.classList.add('stagger-play'));
 });
+
+// ── Mobile Menu Toggle ──────────────────────────────────────
+const menuToggle = document.getElementById('menuToggle');
+const flyerMenu  = document.getElementById('flyerMenu');
+
+if (menuToggle && flyerMenu) {
+  menuToggle.addEventListener('click', () => {
+    menuToggle.classList.toggle('active');
+    flyerMenu.classList.toggle('active');
+    document.body.style.overflow = flyerMenu.classList.contains('active') ? 'hidden' : '';
+  });
+
+  // Close menu on link click
+  flyerMenu.querySelectorAll('.flyer-link').forEach(link => {
+    link.addEventListener('click', () => {
+      menuToggle.classList.remove('active');
+      flyerMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  });
+}
