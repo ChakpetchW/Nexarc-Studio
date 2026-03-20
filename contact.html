@@ -185,14 +185,18 @@
 
       try {
         // 1. Save to Supabase
+        console.log('Sending to Supabase...', formData);
         const { error: dbError } = await supabaseClient
           .from('contact_submissions')
           .insert([formData]);
 
-        if (dbError) throw dbError;
+        if (dbError) {
+          console.error('Supabase Error:', dbError);
+          throw new Error(`Supabase: ${dbError.message}`);
+        }
 
         // 2. Send Email via EmailJS
-        // Map fields to your EmailJS template variables
+        console.log('Sending to EmailJS...');
         const templateParams = {
           from_name: formData.full_name,
           reply_to: formData.email,
@@ -201,8 +205,12 @@
           to_email: 'chakpetch.scaleup@gmail.com'
         };
 
-        if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+        try {
           await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+        } catch (mailErr) {
+          console.error('EmailJS Error:', mailErr);
+          // We don't throw here so the DB insert still counts as success 
+          // but we log it for debugging.
         }
 
         // Success State
@@ -211,8 +219,8 @@
         formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
       } catch (err) {
-        console.error('Error:', err);
-        alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
+        console.error('Final Submission Error:', err);
+        alert(`เกิดข้อผิดพลาด: ${err.message || 'กรุณาลองใหม่อีกครั้ง'}`);
         submitBtn.innerText = originalText;
         submitBtn.disabled = false;
       }
