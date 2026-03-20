@@ -402,3 +402,55 @@ footer {
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--accent-mid); border-radius: 4px; }
+
+/* ── Responsive Design ── */
+
+@media (max-width: 1024px) {
+  .container { padding: 0 40px; }
+  .bento-grid { grid-template-columns: 1fr 1fr; }
+  .hero-inner { gap: 40px; }
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 24px; }
+  
+  /* Navigation */
+  .nav-links { display: none; } /* Simplified for now */
+  .navbar { padding: 15px 0; }
+  
+  /* Hero */
+  .hero { padding: 100px 0 60px; text-align: center; }
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero-eyebrow { justify-content: center; }
+  .hero-sub { margin: 0 auto 32px; }
+  .hero-actions { justify-content: center; }
+  
+  /* Bento Grid */
+  .bento-grid { grid-template-columns: 1fr; }
+  
+  /* Works */
+  .project-item { flex-direction: column !important; gap: 32px; text-align: center; }
+  .project-img { height: 300px; }
+  .project-info { padding: 0 !important; }
+  .magnetic-wrap { margin: 0 auto; }
+  
+  /* Contact */
+  .contact-inner { grid-template-columns: 1fr; gap: 60px; }
+  .contact-hero { text-align: center; }
+  .contact-info-item { justify-content: center; }
+  .btn-submit { width: 100%; }
+  
+  /* Footer */
+  .footer-inner { flex-direction: column; gap: 32px; text-align: center; }
+  .footer-links { justify-content: center; }
+
+  /* Disable Custom Cursor on Mobile */
+  #cursor, #cursor-trail { display: none !important; }
+  * { cursor: auto !important; }
+}
+
+@media (max-width: 480px) {
+  .hero-headline { font-size: 2.4rem; }
+  .hero-actions { flex-direction: column; }
+  .btn-primary, .btn-outline { width: 100%; text-align: center; }
+}
