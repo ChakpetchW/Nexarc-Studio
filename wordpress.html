@@ -6,135 +6,6 @@
   <meta name="description" content="รับทำเว็บไซต์ WordPress ระดับ Enterprise รองรับ WooCommerce ขนาดใหญ่ SEO Optimization และ High-Converting Landing Pages สำหรับธุรกิจไทย">
   <title>WordPress Solutions — Nexarc Studio</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* ── WordPress Hero ── */
-    .wp-hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding-top: var(--nav-h);
-      position: relative;
-      overflow: hidden;
-    }
-    .wp-hero-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-      width: 100%;
-    }
-    .wp-visual {
-      position: relative;
-    }
-    .wp-visual .mockup-stack {
-      position: relative;
-      height: 520px;
-    }
-    .wp-visual .mockup-stack img {
-      width: 85%;
-      border-radius: 16px;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
-    }
-    .wp-visual .mockup-front {
-      position: absolute;
-      top: 0; right: 0;
-      z-index: 3;
-      animation: parallax-slow 0.1s linear;
-      filter: drop-shadow(0 20px 40px rgba(200,16,46,0.25));
-    }
-    .wp-visual .mockup-shadow {
-      position: absolute;
-      top: 60px; left: 0;
-      z-index: 1;
-      opacity: 0.5;
-      filter: blur(2px);
-    }
-
-    /* ── Features Section ── */
-    .features-section { }
-    .features-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-    }
-    .feature-item {
-      padding: 48px;
-      border-bottom: 1px solid var(--grid-line);
-      border-right: 1px solid var(--grid-line);
-    }
-    .feature-item:nth-child(2n) { border-right: none; }
-    .feature-item:nth-last-child(-n+2) { border-bottom: none; }
-    .feature-num {
-      font-family: 'Inter', sans-serif;
-      font-size: 3rem;
-      font-weight: 900;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      line-height: 1;
-      margin-bottom: 16px;
-    }
-    .feature-item h3 { font-size: 1.25rem; margin-bottom: 12px; }
-    .feature-item p  { color: var(--text-body); font-size: 0.95rem; line-height: 1.75; }
-
-    /* ── Stats Band ── */
-    .stats-band {
-      background: linear-gradient(135deg, rgba(200,16,46,0.08), rgba(139,0,0,0.05));
-      border: 1px solid rgba(200,16,46,0.15);
-      border-radius: var(--radius);
-      padding: 60px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
-      text-align: center;
-    }
-    .stat-val {
-      font-family: 'Inter', sans-serif;
-      font-size: 3.5rem;
-      font-weight: 900;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-    .stat-label { color: var(--text-body); font-size: 0.9rem; }
-
-    /* ── Tech Stack ── */
-    .tech-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 32px;
-    }
-    .tech-badge {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 100px;
-      padding: 8px 20px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-body);
-      transition: background 0.3s, border-color 0.3s, color 0.3s;
-    }
-    .tech-badge:hover {
-      background: rgba(200,16,46,0.15);
-      border-color: var(--accent-mid);
-      color: #fff;
-    }
-
-    /* ── CTA ── */
-    .cta-band {
-      background: linear-gradient(135deg, rgba(255,51,51,0.1) 0%, rgba(139,0,0,0.1) 100%);
-      border: 1px solid rgba(200,16,46,0.2);
-      border-radius: var(--radius);
-      padding: 80px 60px;
-      text-align: center;
-    }
-    .cta-band h2 { margin-bottom: 16px; }
-    .cta-band p  { color: var(--text-body); margin-bottom: 40px; font-size: 1.05rem; }
-  </style>
 </head>
 <body>
   <div id="cursor"></div>
@@ -142,14 +13,26 @@
 
   <nav class="navbar">
     <a class="logo" href="index.html"><span>Nexarc</span> Studio</a>
-    <ul class="nav-links">
       <li><a href="index.html">หน้าหลัก</a></li>
       <li><a href="wordpress.html" class="active">WordPress</a></li>
       <li><a href="webapp.html">Web App</a></li>
       <li><a href="works.html">ผลงาน</a></li>
       <li><a href="contact.html" class="nav-cta">ติดต่อเรา</a></li>
     </ul>
+    <button class="navbar-toggle" id="menuToggle">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <div class="flyer-menu" id="flyerMenu">
+    <a href="index.html" class="flyer-link">หน้าหลัก</a>
+    <a href="wordpress.html" class="flyer-link active">WordPress</a>
+    <a href="webapp.html" class="flyer-link">Web App</a>
+    <a href="works.html" class="flyer-link">ผลงาน</a>
+    <a href="contact.html" class="flyer-link">ติดต่อเรา</a>
+  </div>
 
   <!-- Hero -->
   <section class="wp-hero">

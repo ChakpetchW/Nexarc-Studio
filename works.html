@@ -6,129 +6,6 @@
   <meta name="description" content="ผลงานของ Nexarc Studio — Web Application ติดตามราคาของสะสม, Enterprise E-Learning Platform, High-Ticket Sales Landing Page">
   <title>Selected Works — Nexarc Studio</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* ── Works Hero ── */
-    .works-hero {
-      min-height: 50vh;
-      display: flex;
-      align-items: flex-end;
-      padding-top: var(--nav-h);
-      padding-bottom: 80px;
-    }
-
-    /* ── Project Grid ── */
-    .project-block {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-      padding: 80px 0;
-      border-bottom: 1px solid var(--grid-line);
-    }
-    .project-block:last-child { border-bottom: none; }
-    .project-block.reverse { direction: rtl; }
-    .project-block.reverse > * { direction: ltr; }
-
-    .project-image-wrap {
-      position: relative;
-      overflow: hidden;
-      border-radius: 20px;
-    }
-    .project-image-wrap img {
-      width: 100%;
-      display: block;
-      border-radius: 20px;
-      transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94),
-                  filter 0.4s;
-    }
-    .project-image-wrap:hover img {
-      transform: scale(1.05);
-      filter: brightness(0.7);
-    }
-    .project-overlay {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: var(--gradient);
-      height: 3px;
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.5s;
-    }
-    .project-image-wrap:hover .project-overlay { transform: scaleX(1); }
-
-    .project-hover-label {
-      position: absolute;
-      bottom: 24px; left: 24px;
-      background: var(--gradient);
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 6px 16px;
-      border-radius: 100px;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.4s, transform 0.4s;
-    }
-    .project-image-wrap:hover .project-hover-label {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .project-content {}
-    .project-num {
-      font-family: 'Inter', sans-serif;
-      font-size: 5rem;
-      font-weight: 900;
-      color: rgba(255,255,255,0.04);
-      line-height: 1;
-      margin-bottom: -20px;
-    }
-    .project-tag {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent-start);
-      margin-bottom: 16px;
-    }
-    .project-content h2 { font-size: clamp(1.6rem, 2.5vw, 2.2rem); margin-bottom: 20px; }
-    .project-content p  { color: var(--text-body); font-size: 0.95rem; line-height: 1.85; margin-bottom: 32px; }
-    .project-meta {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-      margin-bottom: 36px;
-    }
-    .meta-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .meta-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
-      font-family: 'Inter', sans-serif;
-    }
-    .meta-val {
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-    }
-
-    /* ── Magnetic btn ── */
-    .magnetic-btn {
-      display: inline-block;
-      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
-    }
-  </style>
 </head>
 <body>
   <div id="cursor"></div>
@@ -136,14 +13,26 @@
 
   <nav class="navbar">
     <a class="logo" href="index.html"><span>Nexarc</span> Studio</a>
-    <ul class="nav-links">
       <li><a href="index.html">หน้าหลัก</a></li>
       <li><a href="wordpress.html">WordPress</a></li>
       <li><a href="webapp.html">Web App</a></li>
       <li><a href="works.html" class="active">ผลงาน</a></li>
       <li><a href="contact.html" class="nav-cta">ติดต่อเรา</a></li>
     </ul>
+    <button class="navbar-toggle" id="menuToggle">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <div class="flyer-menu" id="flyerMenu">
+    <a href="index.html" class="flyer-link">หน้าหลัก</a>
+    <a href="wordpress.html" class="flyer-link">WordPress</a>
+    <a href="webapp.html" class="flyer-link">Web App</a>
+    <a href="works.html" class="flyer-link active">ผลงาน</a>
+    <a href="contact.html" class="flyer-link">ติดต่อเรา</a>
+  </div>
 
   <!-- Hero -->
   <section class="works-hero">

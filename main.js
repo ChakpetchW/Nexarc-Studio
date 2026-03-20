@@ -72,22 +72,43 @@ staggerEls.forEach((el, i) => {
 });
 
 // ── Mobile Menu Toggle ──────────────────────────────────────
-const menuToggle = document.getElementById('menuToggle');
-const flyerMenu  = document.getElementById('flyerMenu');
+const menuToggle  = document.getElementById('menuToggle');
+const flyerMenu   = document.getElementById('flyerMenu');
+const menuOverlay = document.getElementById('menuOverlay');
 
 if (menuToggle && flyerMenu) {
-  menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('active');
-    flyerMenu.classList.toggle('active');
-    document.body.style.overflow = flyerMenu.classList.contains('active') ? 'hidden' : '';
+  const toggleMenu = (forceClose = false) => {
+    const isActive = forceClose ? false : !flyerMenu.classList.contains('active');
+    
+    menuToggle.classList.toggle('active', isActive);
+    flyerMenu.classList.toggle('active', isActive);
+    if (menuOverlay) {
+      menuOverlay.classList.toggle('active', isActive);
+    }
+    document.body.style.overflow = isActive ? 'hidden' : '';
+  };
+
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMenu();
   });
 
-  // Close menu on link click
+  // Close when clicking overlay
+  if (menuOverlay) {
+    menuOverlay.addEventListener('click', () => toggleMenu(true));
+  }
+
+  // Close when clicking links
   flyerMenu.querySelectorAll('.flyer-link').forEach(link => {
-    link.addEventListener('click', () => {
-      menuToggle.classList.remove('active');
-      flyerMenu.classList.remove('active');
-      document.body.style.overflow = '';
-    });
+    link.addEventListener('click', () => toggleMenu(true));
+  });
+
+  // Final fallback for clicking anywhere outside
+  document.addEventListener('click', (e) => {
+    if (flyerMenu.classList.contains('active') && 
+        !flyerMenu.contains(e.target) && 
+        !menuToggle.contains(e.target)) {
+      toggleMenu(true);
+    }
   });
 }

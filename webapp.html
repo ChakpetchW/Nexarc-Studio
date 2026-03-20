@@ -6,115 +6,6 @@
   <meta name="description" content="รับพัฒนา Web Application, ระบบ E-Learning, Data Platform, Custom API สำหรับธุรกิจไทย ด้วยเทคโนโลยีทันสมัย React, Node.js, Next.js">
   <title>Custom Web Applications — Nexarc Studio</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* ── Data Node Animation ── */
-    .node-canvas { position: relative; height: 480px; }
-    #nodeCanvas {
-      width: 100%;
-      height: 100%;
-      border-radius: 24px;
-    }
-
-    /* ── Capabilities ── */
-    .cap-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-    .cap-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--grid-line);
-      border-radius: var(--radius);
-      padding: 36px 28px;
-      transition: border-color 0.3s, background 0.3s, transform 0.4s;
-    }
-    .cap-card:hover {
-      border-color: var(--accent-mid);
-      background: rgba(200,16,46,0.06);
-      transform: translateY(-6px);
-    }
-    .cap-icon { font-size: 2rem; margin-bottom: 20px; }
-    .cap-card h3 { font-size: 1.15rem; margin-bottom: 12px; }
-    .cap-card p  { font-size: 0.92rem; color: var(--text-body); line-height: 1.75; }
-
-    /* ── Tech Stack Marquee ── */
-    .tech-marquee-wrapper {
-      overflow: hidden;
-      padding: 0;
-    }
-    .tech-marquee-track {
-      display: flex;
-      gap: 48px;
-      animation: techMarquee 25s linear infinite;
-      width: max-content;
-    }
-    .tech-marquee-track:hover { animation-play-state: paused; }
-    @keyframes techMarquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    .tech-logo-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      filter: grayscale(1) brightness(0.5);
-      transition: filter 0.3s, transform 0.3s;
-      cursor: default;
-    }
-    .tech-logo-item:hover {
-      filter: grayscale(0) brightness(1);
-      transform: translateY(-4px);
-    }
-    .tech-logo-item .tl-icon {
-      width: 56px; height: 56px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .tech-logo-item span {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: rgba(255,255,255,0.6);
-    }
-
-    /* ── Process Timeline ── */
-    .process-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      position: relative;
-    }
-    .process-grid::before {
-      content: '';
-      position: absolute;
-      top: 24px; left: 12.5%;
-      width: 75%; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent-mid), var(--accent-mid), transparent);
-    }
-    .process-step { padding: 0 16px; text-align: center; }
-    .process-num {
-      width: 48px; height: 48px;
-      background: var(--gradient);
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Inter', sans-serif;
-      font-weight: 800;
-      font-size: 0.9rem;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 1;
-    }
-    .process-step h3 { font-size: 1rem; margin-bottom: 10px; }
-    .process-step p  { font-size: 0.85rem; color: var(--text-body); }
-  </style>
 </head>
 <body>
   <div id="cursor"></div>
@@ -122,14 +13,26 @@
 
   <nav class="navbar">
     <a class="logo" href="index.html"><span>Nexarc</span> Studio</a>
-    <ul class="nav-links">
       <li><a href="index.html">หน้าหลัก</a></li>
       <li><a href="wordpress.html">WordPress</a></li>
       <li><a href="webapp.html" class="active">Web App</a></li>
       <li><a href="works.html">ผลงาน</a></li>
       <li><a href="contact.html" class="nav-cta">ติดต่อเรา</a></li>
     </ul>
+    <button class="navbar-toggle" id="menuToggle">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <div class="flyer-menu" id="flyerMenu">
+    <a href="index.html" class="flyer-link">หน้าหลัก</a>
+    <a href="wordpress.html" class="flyer-link">WordPress</a>
+    <a href="webapp.html" class="flyer-link active">Web App</a>
+    <a href="works.html" class="flyer-link">ผลงาน</a>
+    <a href="contact.html" class="flyer-link">ติดต่อเรา</a>
+  </div>
 
   <!-- Hero -->
   <section style="min-height:100vh; display:flex; align-items:center; padding-top:var(--nav-h); overflow:hidden;">
