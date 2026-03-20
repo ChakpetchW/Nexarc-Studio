@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="รับทำเว็บไซต์ WordPress ระดับ Enterprise รองรับ WooCommerce ขนาดใหญ่ SEO Optimization และ High-Converting Landing Pages สำหรับธุรกิจไทย">
+  <title>WordPress Solutions — Nexarc Studio</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── WordPress Hero ── */
+    .wp-hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+    }
+    .wp-hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      width: 100%;
+    }
+    .wp-visual {
+      position: relative;
+    }
+    .wp-visual .mockup-stack {
+      position: relative;
+      height: 520px;
+    }
+    .wp-visual .mockup-stack img {
+      width: 85%;
+      border-radius: 16px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    }
+    .wp-visual .mockup-front {
+      position: absolute;
+      top: 0; right: 0;
+      z-index: 3;
+      animation: parallax-slow 0.1s linear;
+      filter: drop-shadow(0 20px 40px rgba(200,16,46,0.25));
+    }
+    .wp-visual .mockup-shadow {
+      position: absolute;
+      top: 60px; left: 0;
+      z-index: 1;
+      opacity: 0.5;
+      filter: blur(2px);
+    }
+
+    /* ── Features Section ── */
+    .features-section { }
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .feature-item {
+      padding: 48px;
+      border-bottom: 1px solid var(--grid-line);
+      border-right: 1px solid var(--grid-line);
+    }
+    .feature-item:nth-child(2n) { border-right: none; }
+    .feature-item:nth-last-child(-n+2) { border-bottom: none; }
+    .feature-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .feature-item h3 { font-size: 1.25rem; margin-bottom: 12px; }
+    .feature-item p  { color: var(--text-body); font-size: 0.95rem; line-height: 1.75; }
+
+    /* ── Stats Band ── */
+    .stats-band {
+      background: linear-gradient(135deg, rgba(200,16,46,0.08), rgba(139,0,0,0.05));
+      border: 1px solid rgba(200,16,46,0.15);
+      border-radius: var(--radius);
+      padding: 60px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      text-align: center;
+    }
+    .stat-val {
+      font-family: 'Inter', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label { color: var(--text-body); font-size: 0.9rem; }
+
+    /* ── Tech Stack ── */
+    .tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .tech-badge {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 8px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-body);
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
+    }
+    .tech-badge:hover {
+      background: rgba(200,16,46,0.15);
+      border-color: var(--accent-mid);
+      color: #fff;
+    }
+
+    /* ── CTA ── */
+    .cta-band {
+      background: linear-gradient(135deg, rgba(255,51,51,0.1) 0%, rgba(139,0,0,0.1) 100%);
+      border: 1px solid rgba(200,16,46,0.2);
+      border-radius: var(--radius);
+      padding: 80px 60px;
+      text-align: center;
+    }
+    .cta-band h2 { margin-bottom: 16px; }
+    .cta-band p  { color: var(--text-body); margin-bottom: 40px; font-size: 1.05rem; }
+  </style>
+</head>
+<body>
+  <div id="cursor"></div>
+  <div id="cursor-trail"></div>
+
+  <nav class="navbar">
+    <a class="logo" href="index.html"><span>Nexarc</span> Studio</a>
+    <ul class="nav-links">
+      <li><a href="index.html">หน้าหลัก</a></li>
+      <li><a href="wordpress.html" class="active">WordPress</a></li>
+      <li><a href="webapp.html">Web App</a></li>
+      <li><a href="works.html">ผลงาน</a></li>
+      <li><a href="contact.html" class="nav-cta">ติดต่อเรา</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="wp-hero">
+    <div class="container">
+      <div class="wp-hero-inner">
+        <div class="wp-content">
+          <div class="section-label reveal">WordPress Solutions</div>
+          <h1 class="reveal delay-1">WordPress,<br><span class="gradient-text">Engineered for Scale.</span></h1>
+          <p class="reveal delay-2" style="max-width:480px; margin: 24px 0 40px;">
+            ปลดล็อกข้อจำกัดเดิมๆ เราออกแบบและพัฒนา WordPress ที่รองรับทราฟฟิกมหาศาล
+            และจัดการสินค้าระดับหมื่นรายการได้อย่างลื่นไหล
+          </p>
+          <a href="contact.html" class="btn-primary reveal delay-3">ปรึกษาโปรเจกต์ฟรี</a>
+        </div>
+        <div class="wp-visual reveal delay-2">
+          <div class="mockup-stack">
+            <img class="mockup-shadow" src="assets/images/wordpress_mockups.png" alt="WordPress mockup backdrop">
+            <img class="mockup-front" src="assets/images/wordpress_mockups.png" alt="Enterprise WordPress Mockup">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section style="padding: 80px 0;">
+    <div class="container">
+      <div class="stats-band reveal">
+        <div>
+          <div class="stat-val">10K+</div>
+          <div class="stat-label">สินค้าที่จัดการได้ด้วย WooCommerce</div>
+        </div>
+        <div>
+          <div class="stat-val">&lt;2s</div>
+          <div class="stat-label">ความเร็วโหลดหน้าเว็บหลังปรับแต่ง</div>
+        </div>
+        <div>
+          <div class="stat-val">3×</div>
+          <div class="stat-label">Conversion Rate เฉลี่ยหลังรีดีไซน์</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="fancy">
+
+  <!-- Features -->
+  <section>
+    <div class="container">
+      <div style="text-align:center; margin-bottom:72px;">
+        <div class="section-label reveal">บริการ WordPress</div>
+        <h2 class="reveal delay-1">ทุกสิ่งที่ธุรกิจ<span class="gradient-text"> ต้องการ</span></h2>
+      </div>
+      <div class="features-grid" style="border: 1px solid var(--grid-line); border-radius: var(--radius); overflow:hidden;">
+        <div class="feature-item reveal-left delay-1">
+          <div class="feature-num">01</div>
+          <h3>Massive E-Commerce</h3>
+          <p>โครงสร้าง WooCommerce ที่ปรับแต่งมาเพื่อจัดการสินค้ามากกว่า 10,000+ รายการ โดยที่เว็บยังโหลดไว ด้วยระบบ Caching และการ Query ฐานข้อมูลที่ได้รับการปรับแต่งอย่างละเอียด</p>
+          <div class="tech-row">
+            <span class="tech-badge">WooCommerce</span>
+            <span class="tech-badge">Redis Cache</span>
+            <span class="tech-badge">MySQL Optimization</span>
+          </div>
+        </div>
+        <div class="feature-item reveal-left delay-2">
+          <div class="feature-num">02</div>
+          <h3>High-Converting Sales Pages</h3>
+          <p>ออกแบบหน้า Landing Page สำหรับธุรกิจองค์กรและเวิร์กชอป ที่เน้นหลักจิตวิทยาและ UX/UI เพื่อปิดการขาย ตั้งแต่ Hero Section ไปจนถึง Social Proof และ CTA ที่ไม่อาจปฏิเสธได้</p>
+          <div class="tech-row">
+            <span class="tech-badge">Landing Page</span>
+            <span class="tech-badge">CRO Design</span>
+            <span class="tech-badge">A/B Testing</span>
+          </div>
+        </div>
+        <div class="feature-item reveal-left delay-3">
+          <div class="feature-num">03</div>
+          <h3>Speed Optimization</h3>
+          <p>โหลดเร็วกว่าด้วยเทคนิค Caching ระดับเซิร์ฟเวอร์ Code Minification และการปรับขนาดรูปภาพอัตโนมัติ พร้อม Lazy Loading เพื่อให้ Core Web Vitals ผ่านเกณฑ์ Google</p>
+          <div class="tech-row">
+            <span class="tech-badge">CloudFlare CDN</span>
+            <span class="tech-badge">Core Web Vitals</span>
+            <span class="tech-badge">Image WebP</span>
+          </div>
+        </div>
+        <div class="feature-item reveal-left delay-4">
+          <div class="feature-num">04</div>
+          <h3>SEO Architecture</h3>
+          <p>วางโครงสร้าง SEO ตั้งแต่ระดับ Technical (Site Structure, Schema Markup, XML Sitemap) ไปจนถึงการวางกลยุทธ์คีย์เวิร์ดที่ตรงกับกลุ่มเป้าหมายธุรกิจของคุณ</p>
+          <div class="tech-row">
+            <span class="tech-badge">Technical SEO</span>
+            <span class="tech-badge">Schema.org</span>
+            <span class="tech-badge">Yoast Premium</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="container">
+      <div class="cta-band reveal">
+        <div class="section-label" style="justify-content:center;">WordPress ระดับ Enterprise</div>
+        <h2>พร้อมสร้างเว็บไซต์ที่<span class="gradient-text"> ขับเคลื่อนยอดขาย?</span></h2>
+        <p>ปรึกษาความต้องการของธุรกิจคุณกับเรา เราจะออกแบบโซลูชัน WordPress ที่เหมาะสมที่สุด</p>
+        <a href="contact.html" class="btn-primary">เริ่มต้นโปรเจกต์</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <a class="footer-logo" href="index.html"><span>Nexarc</span> Studio</a>
+        <ul class="footer-links">
+          <li><a href="wordpress.html">WordPress</a></li>
+          <li><a href="webapp.html">Web App</a></li>
+          <li><a href="works.html">ผลงาน</a></li>
+          <li><a href="contact.html">ติดต่อ</a></li>
+        </ul>
+      </div>
+      <p class="footer-copy">© 2026 Nexarc Studio. สงวนลิขสิทธิ์ทุกประการ</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    // Parallax on scroll
+    const mockupFront = document.querySelector('.mockup-front');
+    const mockupBack  = document.querySelector('.mockup-shadow');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (mockupFront) mockupFront.style.transform = `translateY(${y * 0.08}px)`;
+      if (mockupBack)  mockupBack.style.transform  = `translateY(${y * 0.04}px)`;
+    });
+  </script>
+</body>
+</html>

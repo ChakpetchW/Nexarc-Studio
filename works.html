@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ผลงานของ Nexarc Studio — Web Application ติดตามราคาของสะสม, Enterprise E-Learning Platform, High-Ticket Sales Landing Page">
+  <title>Selected Works — Nexarc Studio</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Works Hero ── */
+    .works-hero {
+      min-height: 50vh;
+      display: flex;
+      align-items: flex-end;
+      padding-top: var(--nav-h);
+      padding-bottom: 80px;
+    }
+
+    /* ── Project Grid ── */
+    .project-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      padding: 80px 0;
+      border-bottom: 1px solid var(--grid-line);
+    }
+    .project-block:last-child { border-bottom: none; }
+    .project-block.reverse { direction: rtl; }
+    .project-block.reverse > * { direction: ltr; }
+
+    .project-image-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+    .project-image-wrap img {
+      width: 100%;
+      display: block;
+      border-radius: 20px;
+      transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94),
+                  filter 0.4s;
+    }
+    .project-image-wrap:hover img {
+      transform: scale(1.05);
+      filter: brightness(0.7);
+    }
+    .project-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: var(--gradient);
+      height: 3px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s;
+    }
+    .project-image-wrap:hover .project-overlay { transform: scaleX(1); }
+
+    .project-hover-label {
+      position: absolute;
+      bottom: 24px; left: 24px;
+      background: var(--gradient);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.4s, transform 0.4s;
+    }
+    .project-image-wrap:hover .project-hover-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .project-content {}
+    .project-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 5rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.04);
+      line-height: 1;
+      margin-bottom: -20px;
+    }
+    .project-tag {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-start);
+      margin-bottom: 16px;
+    }
+    .project-content h2 { font-size: clamp(1.6rem, 2.5vw, 2.2rem); margin-bottom: 20px; }
+    .project-content p  { color: var(--text-body); font-size: 0.95rem; line-height: 1.85; margin-bottom: 32px; }
+    .project-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .meta-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      font-family: 'Inter', sans-serif;
+    }
+    .meta-val {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ── Magnetic btn ── */
+    .magnetic-btn {
+      display: inline-block;
+      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+  </style>
+</head>
+<body>
+  <div id="cursor"></div>
+  <div id="cursor-trail"></div>
+
+  <nav class="navbar">
+    <a class="logo" href="index.html"><span>Nexarc</span> Studio</a>
+    <ul class="nav-links">
+      <li><a href="index.html">หน้าหลัก</a></li>
+      <li><a href="wordpress.html">WordPress</a></li>
+      <li><a href="webapp.html">Web App</a></li>
+      <li><a href="works.html" class="active">ผลงาน</a></li>
+      <li><a href="contact.html" class="nav-cta">ติดต่อเรา</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="works-hero">
+    <div class="container">
+      <div class="section-label reveal">Selected Works</div>
+      <h1 class="reveal delay-1">Showcase of<br><span class="gradient-text"> Excellence.</span></h1>
+    </div>
+  </section>
+
+  <hr class="fancy">
+
+  <!-- Projects -->
+  <section style="padding-top:60px;">
+    <div class="container">
+
+      <!-- Project 1 -->
+      <div class="project-block">
+        <div class="project-image-wrap reveal-img">
+          <img src="assets/images/portfolio_collectibles.png" alt="แพลตฟอร์มเช็กราคาของสะสม">
+          <div class="project-overlay"></div>
+          <div class="project-hover-label">Data / Tracking App</div>
+        </div>
+        <div class="project-content">
+          <div class="project-num">01</div>
+          <div class="project-tag">Data / Tracking Web App</div>
+          <h2>แพลตฟอร์มเช็กราคา<br>ของสะสมจากญี่ปุ่น</h2>
+          <p>ระบบดึงข้อมูลราคาตลาดจากเว็บไซต์ญี่ปุ่นแบบ Real-time พร้อมปรับแต่ง UI/UX ให้เข้ากับผู้ใช้งานในไทย รองรับการค้นหา การ Filter และ Chart แสดงแนวโน้มราคา</p>
+          <div class="project-meta">
+            <div class="meta-item">
+              <span class="meta-label">ประเภท</span>
+              <span class="meta-val">Web Application</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">เทคโนโลยี</span>
+              <span class="meta-val">Next.js + Python API</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">ระยะเวลา</span>
+              <span class="meta-val">6 สัปดาห์</span>
+            </div>
+          </div>
+          <span class="magnetic-btn">
+            <a href="contact.html" class="btn-primary">สนใจโปรเจกต์คล้ายกัน →</a>
+          </span>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-block reverse">
+        <div class="project-image-wrap reveal-img">
+          <img src="assets/images/portfolio_elearning.png" alt="Enterprise E-Learning Platform">
+          <div class="project-overlay"></div>
+          <div class="project-hover-label">E-Learning Platform</div>
+        </div>
+        <div class="project-content">
+          <div class="project-num">02</div>
+          <div class="project-tag">Enterprise Web Application</div>
+          <h2>Enterprise E-Learning<br>Web Application</h2>
+          <p>ระบบจัดการคอร์สเรียนออนไลน์สำหรับองค์กร พร้อม Backend API ที่รองรับผู้ใช้งานจำนวนมาก มีระบบ Video Streaming, Progress Tracking, Quiz, Certificate และ Analytics Dashboard</p>
+          <div class="project-meta">
+            <div class="meta-item">
+              <span class="meta-label">ประเภท</span>
+              <span class="meta-val">Enterprise Platform</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">เทคโนโลยี</span>
+              <span class="meta-val">React + Node.js + PostgreSQL</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">ผู้ใช้งาน</span>
+              <span class="meta-val">500+ Users</span>
+            </div>
+          </div>
+          <span class="magnetic-btn">
+            <a href="contact.html" class="btn-primary">สนใจโปรเจกต์คล้ายกัน →</a>
+          </span>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project-block">
+        <div class="project-image-wrap reveal-img">
+          <img src="assets/images/portfolio_landing.png" alt="High-Ticket Sales Page">
+          <div class="project-overlay"></div>
+          <div class="project-hover-label">Landing Page</div>
+        </div>
+        <div class="project-content">
+          <div class="project-num">03</div>
+          <div class="project-tag">WordPress Landing Page</div>
+          <h2>High-Ticket Workshop<br>Sales Page</h2>
+          <p>หน้า Landing Page สำหรับคอร์สอบรมพนักงานองค์กร (In-house Training) ที่ออกแบบมาเพื่อเพิ่ม Conversion Rate โดยเฉพาะ ด้วยหลักจิตวิทยาการขายและ UX ที่ผ่านการ A/B Test</p>
+          <div class="project-meta">
+            <div class="meta-item">
+              <span class="meta-label">ประเภท</span>
+              <span class="meta-val">WordPress + WooCommerce</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">ผลลัพธ์</span>
+              <span class="meta-val">CVR เพิ่มขึ้น 3.2×</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">ระยะเวลา</span>
+              <span class="meta-val">3 สัปดาห์</span>
+            </div>
+          </div>
+          <span class="magnetic-btn">
+            <a href="contact.html" class="btn-primary">สนใจโปรเจกต์คล้ายกัน →</a>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="container">
+      <div style="background: linear-gradient(135deg, rgba(255,51,51,0.1) 0%, rgba(139,0,0,0.1) 100%); border: 1px solid rgba(200,16,46,0.2); border-radius: var(--radius); padding: 80px 60px; text-align: center;" class="reveal">
+        <div class="section-label" style="justify-content:center;">ถัดไปคือโปรเจกต์ของคุณ</div>
+        <h2>ให้โปรเจกต์ของคุณ<br>เป็น<span class="gradient-text"> Case Study ถัดไป</span></h2>
+        <p style="color:var(--text-body); margin: 16px 0 40px; font-size:1.05rem;">เริ่มต้นบทสนทนาง่ายๆ เล่าไอเดียของคุณ เราจะช่วยออกแบบให้เป็นจริง</p>
+        <span class="magnetic-btn">
+          <a href="contact.html" class="btn-primary">เริ่มต้นโปรเจกต์</a>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <a class="footer-logo" href="index.html"><span>Nexarc</span> Studio</a>
+        <ul class="footer-links">
+          <li><a href="wordpress.html">WordPress</a></li>
+          <li><a href="webapp.html">Web App</a></li>
+          <li><a href="works.html">ผลงาน</a></li>
+          <li><a href="contact.html">ติดต่อ</a></li>
+        </ul>
+      </div>
+      <p class="footer-copy">© 2026 Nexarc Studio. สงวนลิขสิทธิ์ทุกประการ</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

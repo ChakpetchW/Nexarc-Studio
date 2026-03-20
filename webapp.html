@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="รับพัฒนา Web Application, ระบบ E-Learning, Data Platform, Custom API สำหรับธุรกิจไทย ด้วยเทคโนโลยีทันสมัย React, Node.js, Next.js">
+  <title>Custom Web Applications — Nexarc Studio</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Data Node Animation ── */
+    .node-canvas { position: relative; height: 480px; }
+    #nodeCanvas {
+      width: 100%;
+      height: 100%;
+      border-radius: 24px;
+    }
+
+    /* ── Capabilities ── */
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .cap-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--grid-line);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      transition: border-color 0.3s, background 0.3s, transform 0.4s;
+    }
+    .cap-card:hover {
+      border-color: var(--accent-mid);
+      background: rgba(200,16,46,0.06);
+      transform: translateY(-6px);
+    }
+    .cap-icon { font-size: 2rem; margin-bottom: 20px; }
+    .cap-card h3 { font-size: 1.15rem; margin-bottom: 12px; }
+    .cap-card p  { font-size: 0.92rem; color: var(--text-body); line-height: 1.75; }
+
+    /* ── Tech Stack Marquee ── */
+    .tech-marquee-wrapper {
+      overflow: hidden;
+      padding: 0;
+    }
+    .tech-marquee-track {
+      display: flex;
+      gap: 48px;
+      animation: techMarquee 25s linear infinite;
+      width: max-content;
+    }
+    .tech-marquee-track:hover { animation-play-state: paused; }
+    @keyframes techMarquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .tech-logo-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      filter: grayscale(1) brightness(0.5);
+      transition: filter 0.3s, transform 0.3s;
+      cursor: default;
+    }
+    .tech-logo-item:hover {
+      filter: grayscale(0) brightness(1);
+      transform: translateY(-4px);
+    }
+    .tech-logo-item .tl-icon {
+      width: 56px; height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .tech-logo-item span {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ── Process Timeline ── */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .process-grid::before {
+      content: '';
+      position: absolute;
+      top: 24px; left: 12.5%;
+      width: 75%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-mid), var(--accent-mid), transparent);
+    }
+    .process-step { padding: 0 16px; text-align: center; }
+    .process-num {
+      width: 48px; height: 48px;
+      background: var(--gradient);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .process-step h3 { font-size: 1rem; margin-bottom: 10px; }
+    .process-step p  { font-size: 0.85rem; color: var(--text-body); }
+  </style>
+</head>
+<body>
+  <div id="cursor"></div>
+  <div id="cursor-trail"></div>
+
+  <nav class="navbar">
+    <a class="logo" href="index.html"><span>Nexarc</span> Studio</a>
+    <ul class="nav-links">
+      <li><a href="index.html">หน้าหลัก</a></li>
+      <li><a href="wordpress.html">WordPress</a></li>
+      <li><a href="webapp.html" class="active">Web App</a></li>
+      <li><a href="works.html">ผลงาน</a></li>
+      <li><a href="contact.html" class="nav-cta">ติดต่อเรา</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section style="min-height:100vh; display:flex; align-items:center; padding-top:var(--nav-h); overflow:hidden;">
+    <div class="container">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;">
+        <div>
+          <div class="section-label reveal">Custom Web Applications</div>
+          <h1 class="reveal delay-1">Beyond<br><span class="gradient-text">Standard Limits.</span></h1>
+          <p class="reveal delay-2" style="max-width:480px; margin: 24px 0 40px;">
+            เปลี่ยนลอจิกธุรกิจที่ซับซ้อนให้เป็น Web Application ที่ใช้งานง่าย ทำงานรวดเร็ว
+            และพร้อมขยายตัวไปพร้อมกับธุรกิจของคุณ
+          </p>
+          <a href="contact.html" class="btn-primary reveal delay-3">ปรึกษาโปรเจกต์ฟรี</a>
+        </div>
+        <div class="reveal delay-2">
+          <div class="node-canvas">
+            <canvas id="nodeCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Capabilities -->
+  <section>
+    <div class="container">
+      <div style="text-align:center; margin-bottom:64px;">
+        <div class="section-label reveal">ความสามารถหลัก</div>
+        <h2 class="reveal delay-1"><span class="gradient-text">Core</span> Capabilities</h2>
+      </div>
+      <div class="cap-grid">
+        <div class="cap-card reveal delay-1">
+          <div class="cap-icon">🎓</div>
+          <h3>E-Learning Platforms</h3>
+          <p>ระบบจัดการการเรียนการสอนออนไลน์ที่ครบวงจร รองรับวิดีโอสตรีมมิ่งและระบบติดตามผลผู้เรียน พร้อม Quiz และ Certification</p>
+        </div>
+        <div class="cap-card reveal delay-2">
+          <div class="cap-icon">📊</div>
+          <h3>Data-Driven Platforms</h3>
+          <p>ระบบดึงข้อมูลจากแพลตฟอร์มต่างประเทศผ่าน API แบบ Real-time เพื่อนำมาประมวลผลและแสดงผลบน Dashboard ที่เข้าใจง่าย</p>
+        </div>
+        <div class="cap-card reveal delay-3">
+          <div class="cap-icon">🔗</div>
+          <h3>Custom API Development</h3>
+          <p>สร้าง Backend ที่แข็งแกร่งและปลอดภัย พร้อม RESTful API หรือ GraphQL ที่รองรับการเชื่อมต่อจากระบบภายนอกได้อย่างไร้รอยต่อ</p>
+        </div>
+        <div class="cap-card reveal delay-1">
+          <div class="cap-icon">🏢</div>
+          <h3>ERP & Business Systems</h3>
+          <p>พัฒนาระบบบริหารจัดการภายในองค์กร ตั้งแต่ระบบ HR จัดการสินค้าคงคลัง ไปจนถึง CRM ที่ตรงกับ Workflow ของธุรกิจ</p>
+        </div>
+        <div class="cap-card reveal delay-2">
+          <div class="cap-icon">💬</div>
+          <h3>Real-time Applications</h3>
+          <p>สรา้งแอปพลิเคชันที่ทำงานแบบ Real-time ด้วย WebSocket เช่น ระบบแชท Dashboard ที่อัพเดตไว และการแจ้งเตือนทันที</p>
+        </div>
+        <div class="cap-card reveal delay-3">
+          <div class="cap-icon">🔒</div>
+          <h3>Security & Scalability</h3>
+          <p>สถาปัตยกรรมที่ออกแบบมาเพื่อความปลอดภัย Authentication, Authorization, Rate Limiting พร้อม Infrastructure ที่ขยายตัวได้</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section>
+    <div class="container">
+      <div style="text-align:center; margin-bottom:48px;">
+        <div class="section-label reveal">เทคโนโลยีที่ใช้</div>
+        <h2 class="reveal delay-1">Tech <span class="gradient-text">Stack</span></h2>
+        <p class="reveal delay-2" style="color:var(--text-body); margin-top:12px;">วางเมาส์ที่ไอคอนเพื่อดูสีจริง</p>
+      </div>
+    </div>
+    <div class="tech-marquee-wrapper">
+      <div class="tech-marquee-track" id="techTrack">
+        <!-- Set 1 -->
+        <div class="tech-logo-item"><div class="tl-icon">⚛️</div><span>React</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">▲</div><span>Next.js</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🟢</div><span>Node.js</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🐍</div><span>Python</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🐘</div><span>PostgreSQL</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🍃</div><span>MongoDB</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🐳</div><span>Docker</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">☁️</div><span>AWS</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🔴</div><span>Redis</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">⚡</div><span>FastAPI</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🌐</div><span>GraphQL</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🔵</div><span>TypeScript</span></div>
+        <!-- Set 2 (duplicate) -->
+        <div class="tech-logo-item"><div class="tl-icon">⚛️</div><span>React</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">▲</div><span>Next.js</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🟢</div><span>Node.js</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🐍</div><span>Python</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🐘</div><span>PostgreSQL</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🍃</div><span>MongoDB</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🐳</div><span>Docker</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">☁️</div><span>AWS</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🔴</div><span>Redis</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">⚡</div><span>FastAPI</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🌐</div><span>GraphQL</span></div>
+        <div class="tech-logo-item"><div class="tl-icon">🔵</div><span>TypeScript</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section>
+    <div class="container">
+      <div style="text-align:center; margin-bottom:72px;">
+        <div class="section-label reveal">กระบวนการพัฒนา</div>
+        <h2 class="reveal delay-1">Development <span class="gradient-text">Process</span></h2>
+      </div>
+      <div class="process-grid reveal">
+        <div class="process-step">
+          <div class="process-num">01</div>
+          <h3>Discovery</h3>
+          <p>วิเคราะห์ความต้องการ วาง Scope และ User Stories อย่างละเอียด</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">02</div>
+          <h3>Architecture</h3>
+          <p>ออกแบบ System Architecture, Database Schema และ API Contract</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">03</div>
+          <h3>Development</h3>
+          <p>พัฒนาแบบ Agile Sprint ส่ง Demo ให้ดูสม่ำเสมอ</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">04</div>
+          <h3>Deploy & Support</h3>
+          <p>Deploy บน Production พร้อม Monitoring และ Support ต่อเนื่อง</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding-bottom:120px;">
+    <div class="container">
+      <div style="background: linear-gradient(135deg, rgba(255,51,51,0.1) 0%, rgba(139,0,0,0.1) 100%); border: 1px solid rgba(200,16,46,0.2); border-radius: var(--radius); padding: 80px 60px; text-align: center;" class="reveal">
+        <div class="section-label" style="justify-content:center;">มีไอเดีย?</div>
+        <h2>พร้อมสร้าง<span class="gradient-text"> Web App ของคุณ?</span></h2>
+        <p style="color:var(--text-body); margin: 16px 0 40px; font-size:1.05rem;">ไม่ว่าจะเป็นระบบเล็กหรือใหญ่ เราพร้อมช่วยออกแบบสถาปัตยกรรมที่ถูกต้องตั้งแต่ต้น</p>
+        <a href="contact.html" class="btn-primary">เริ่มต้นโปรเจกต์</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <a class="footer-logo" href="index.html"><span>Nexarc</span> Studio</a>
+        <ul class="footer-links">
+          <li><a href="wordpress.html">WordPress</a></li>
+          <li><a href="webapp.html">Web App</a></li>
+          <li><a href="works.html">ผลงาน</a></li>
+          <li><a href="contact.html">ติดต่อ</a></li>
+        </ul>
+      </div>
+      <p class="footer-copy">© 2026 Nexarc Studio. สงวนลิขสิทธิ์ทุกประการ</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    // ── Data Node Canvas Animation ──────────────────
+    const canvas = document.getElementById('nodeCanvas');
+    const ctx    = canvas.getContext('2d');
+    let W, H, nodes = [];
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', () => { resize(); initNodes(); });
+
+    class Node {
+      constructor() {
+        this.x  = Math.random() * W;
+        this.y  = Math.random() * H;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.r  = Math.random() * 4 + 2;
+        this.red = Math.random() > 0.7;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > W) this.vx *= -1;
+        if (this.y < 0 || this.y > H) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = this.red ? 'rgba(200,16,46,0.9)' : 'rgba(255,255,255,0.8)';
+        ctx.fill();
+        if (this.red) {
+          ctx.shadowBlur = 12;
+          ctx.shadowColor = '#C8102E';
+        }
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    function initNodes() {
+      nodes = Array.from({ length: 60 }, () => new Node());
+    }
+    initNodes();
+
+    function connect() {
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const d  = Math.sqrt(dx*dx + dy*dy);
+          if (d < 120) {
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            const opacity = 1 - d / 120;
+            ctx.strokeStyle = `rgba(200,16,46,${opacity * 0.3})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, W, H);
+      nodes.forEach(n => { n.update(); n.draw(); });
+      connect();
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>

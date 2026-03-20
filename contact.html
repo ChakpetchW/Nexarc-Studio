@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ติดต่อ Nexarc Studio รับทำเว็บไซต์ WordPress และพัฒนา Web Application สำหรับธุรกิจไทย ปรึกษาฟรีไม่มีค่าใช้จ่าย">
+  <title>ติดต่อเรา — Nexarc Studio</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Contact Layout ── */
+    .contact-hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-h);
+      padding-bottom: 80px;
+    }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 100px;
+      align-items: start;
+      width: 100%;
+    }
+
+    /* ── Left Side ── */
+    .contact-headline {
+      font-size: clamp(2.5rem, 4.5vw, 4.2rem);
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+    .contact-sub {
+      color: var(--text-body);
+      margin-bottom: 56px;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .ci-icon {
+      width: 44px; height: 44px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.04);
+    }
+    .ci-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      font-family: 'Inter', sans-serif;
+      margin-bottom: 2px;
+    }
+    .ci-val {
+      font-size: 0.92rem;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .ci-val:hover { color: var(--accent-start); }
+
+    /* ── Form ── */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+    .form-group {
+      position: relative;
+    }
+    .form-group label {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 12px;
+      transition: color 0.3s;
+    }
+    .form-group:focus-within label {
+      color: var(--accent-start);
+    }
+    .form-control {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      font-family: 'Noto Sans Thai', 'Inter', sans-serif;
+      font-size: 1rem;
+      padding: 12px 0;
+      outline: none;
+      transition: border-color 0.3s;
+      caret-color: var(--accent-start);
+    }
+    .form-control::placeholder {
+      color: rgba(255,255,255,0.18);
+    }
+    .form-underline {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--gradient);
+      transition: width 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      box-shadow: 0 0 12px rgba(200,16,46,0.5);
+    }
+    .form-control:focus ~ .form-underline { width: 100%; }
+
+    select.form-control {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      cursor: pointer;
+    }
+    select.form-control option {
+      background: #1a1a1a;
+      color: #fff;
+    }
+    textarea.form-control {
+      resize: none;
+      min-height: 100px;
+      line-height: 1.7;
+    }
+
+    /* ── Submit Button ── */
+    .btn-submit {
+      align-self: flex-start;
+      background: var(--gradient);
+      color: #fff;
+      padding: 18px 48px;
+      border-radius: 100px;
+      font-family: 'Prompt', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      border: none;
+      cursor: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+      transition: left 0.6s;
+    }
+    .btn-submit:hover::before { left: 100%; }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px rgba(200,16,46,0.5);
+    }
+
+    /* ── Success State ── */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 60px 40px;
+    }
+    .form-success .success-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    .form-success h3 { margin-bottom: 12px; }
+    .form-success p  { color: var(--text-body); }
+  </style>
+</head>
+<body>
+  <div id="cursor"></div>
+  <div id="cursor-trail"></div>
+
+  <nav class="navbar">
+    <a class="logo" href="index.html"><span>Nexarc</span> Studio</a>
+    <ul class="nav-links">
+      <li><a href="index.html">หน้าหลัก</a></li>
+      <li><a href="wordpress.html">WordPress</a></li>
+      <li><a href="webapp.html">Web App</a></li>
+      <li><a href="works.html">ผลงาน</a></li>
+      <li><a href="contact.html" class="active nav-cta">ติดต่อเรา</a></li>
+    </ul>
+  </nav>
+
+  <!-- Contact -->
+  <section class="contact-hero">
+    <div class="container">
+      <div class="contact-inner">
+
+        <!-- Left -->
+        <div>
+          <div class="section-label reveal">ติดต่อเรา</div>
+          <h1 class="contact-headline reveal delay-1">Ready to<br><span class="gradient-text">Innovate?</span></h1>
+          <p class="contact-sub reveal delay-2">
+            เล่าไอเดียโปรเจกต์ของคุณให้เราฟัง ไม่ว่าจะเป็นการปรับโฉมเว็บไซต์ หรือสร้างแพลตฟอร์มใหม่จากศูนย์ เราพร้อมรับฟังทุกไอเดีย
+          </p>
+          <div class="contact-info reveal delay-3">
+            <div class="contact-info-item">
+              <div class="ci-icon">📧</div>
+              <div>
+                <span class="ci-label">อีเมล</span>
+                <a class="ci-val" href="mailto:hello@nexarcstudio.com">hello@nexarcstudio.com</a>
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="ci-icon">📱</div>
+              <div>
+                <span class="ci-label">โทรศัพท์</span>
+                <a class="ci-val" href="tel:+66800000000">+66 80 000 0000</a>
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="ci-icon">💼</div>
+              <div>
+                <span class="ci-label">LinkedIn</span>
+                <a class="ci-val" href="#" target="_blank">linkedin.com/in/nexarcstudio</a>
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="ci-icon">💬</div>
+              <div>
+                <span class="ci-label">Line OA</span>
+                <a class="ci-val" href="#">@nexarcstudio</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right — Form -->
+        <div class="reveal delay-2">
+          <div class="glass-card" style="padding: 52px 48px;">
+            <form class="contact-form" id="contactForm" novalidate>
+              <div class="form-group">
+                <label for="name">ชื่อ-นามสกุล</label>
+                <input type="text" id="name" class="form-control" placeholder="คุณชื่ออะไรครับ/ค่ะ" required>
+                <div class="form-underline"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="email">อีเมลองค์กร / อีเมลส่วนตัว</label>
+                <input type="email" id="email" class="form-control" placeholder="email@company.com" required>
+                <div class="form-underline"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="service">ประเภทบริการที่สนใจ</label>
+                <select id="service" class="form-control" required>
+                  <option value="" disabled selected>เลือกบริการ...</option>
+                  <option value="wordpress">WordPress Website</option>
+                  <option value="webapp">Custom Web Application</option>
+                  <option value="elearning">E-Learning Platform</option>
+                  <option value="ecommerce">E-Commerce / WooCommerce</option>
+                  <option value="api">API Development</option>
+                  <option value="other">อื่นๆ</option>
+                </select>
+                <div class="form-underline"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="message">รายละเอียดโปรเจกต์</label>
+                <textarea id="message" class="form-control" rows="4" placeholder="เล่าให้เราฟังเกี่ยวกับโปรเจกต์ของคุณ... ยิ่งละเอียดยิ่งดีครับ" required></textarea>
+                <div class="form-underline"></div>
+              </div>
+
+              <button type="submit" class="btn-submit" id="submitBtn">ส่งข้อความ ✦</button>
+            </form>
+
+            <div class="form-success" id="formSuccess">
+              <div class="success-icon">🎉</div>
+              <h3>ได้รับข้อความแล้วครับ!</h3>
+              <p>เราจะติดต่อกลับภายใน 24 ชั่วโมง ขอบคุณที่ไว้วางใจ Nexarc Studio นะครับ</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <a class="footer-logo" href="index.html"><span>Nexarc</span> Studio</a>
+        <ul class="footer-links">
+          <li><a href="wordpress.html">WordPress</a></li>
+          <li><a href="webapp.html">Web App</a></li>
+          <li><a href="works.html">ผลงาน</a></li>
+          <li><a href="contact.html">ติดต่อ</a></li>
+        </ul>
+      </div>
+      <p class="footer-copy">© 2026 Nexarc Studio. สงวนลิขสิทธิ์ทุกประการ</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    // Form submit (demo)
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = 'กำลังส่ง...';
+      btn.disabled = true;
+      setTimeout(() => {
+        document.getElementById('contactForm').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      }, 1200);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="รับทำเว็บไซต์ WordPress และพัฒนา Web Application ระดับพรีเมียม สถาปัตยกรรมซอฟต์แวร์ที่ล้ำสมัย ตอบโจทย์ธุรกิจไทย">
+  <title>Nexarc Studio — Architecting the Digital Future</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Stagger Animation ── */
+    .stagger-init { opacity: 0; transform: translateY(32px); }
+    .stagger-init.stagger-play {
+      animation: staggerUp 0.8s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+    }
+    @keyframes staggerUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-h);
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent-start);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero-eyebrow span {
+      width: 24px; height: 1px;
+      background: var(--gradient);
+      display: inline-block;
+    }
+    .hero-headline {
+      font-size: clamp(3rem, 5.5vw, 5.2rem);
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 28px;
+    }
+    .hero-headline .line { display: block; }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--text-body);
+      max-width: 500px;
+      margin-bottom: 44px;
+      line-height: 1.9;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-visual img {
+      width: 100%;
+      max-width: 580px;
+      border-radius: 24px;
+      filter: drop-shadow(0 0 60px rgba(200,16,46,0.3));
+      animation: float 6s ease-in-out infinite;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(200,16,46,0.18) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: -1;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-18px); }
+    }
+
+    /* ── Value Marquee ── */
+    .marquee-section { padding: 0; }
+
+    /* ── Bento Grid ── */
+    .bento-section { }
+    .bento-heading { text-align: center; margin-bottom: 64px; }
+    .bento-heading .section-label { justify-content: center; }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .bento-card { }
+    .bento-card .card-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-start);
+      margin-bottom: 16px;
+    }
+    .bento-card h3 { font-size: 1.6rem; margin-bottom: 16px; }
+    .bento-card p { color: var(--text-body); font-size: 0.95rem; line-height: 1.8; }
+    .bento-card .card-icon {
+      width: 48px; height: 48px;
+      background: var(--gradient);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+      font-size: 1.4rem;
+    }
+
+    /* ── CTA Band ── */
+    .cta-band {
+      background: linear-gradient(135deg, rgba(255,51,51,0.1) 0%, rgba(139,0,0,0.1) 100%);
+      border: 1px solid rgba(200,16,46,0.2);
+      border-radius: var(--radius);
+      padding: 80px 60px;
+      text-align: center;
+    }
+    .cta-band h2 { margin-bottom: 16px; }
+    .cta-band p  { color: var(--text-body); margin-bottom: 40px; font-size: 1.1rem; }
+  </style>
+</head>
+<body>
+  <!-- Cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-trail"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a class="logo" href="index.html"><span>Nexarc</span> Studio</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">หน้าหลัก</a></li>
+      <li><a href="wordpress.html">WordPress</a></li>
+      <li><a href="webapp.html">Web App</a></li>
+      <li><a href="works.html">ผลงาน</a></li>
+      <li><a href="contact.html" class="nav-cta">ติดต่อเรา</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <div class="hero-eyebrow stagger-init" data-stagger="0">
+            <span></span> Premium Digital Agency
+          </div>
+          <h1 class="hero-headline">
+            <span class="line stagger-init" data-stagger="1">Architecting</span>
+            <span class="line stagger-init" data-stagger="2">the <span class="gradient-text">Digital</span></span>
+            <span class="line stagger-init" data-stagger="3">Future.</span>
+          </h1>
+          <p class="hero-sub stagger-init" data-stagger="4">
+            พัฒนาเว็บไซต์ WordPress และ Web Application ระดับพรีเมียม ด้วยสถาปัตยกรรมซอฟต์แวร์ที่ล้ำสมัยและตอบโจทย์ธุรกิจคุณอย่างแท้จริง
+          </p>
+          <div class="hero-actions stagger-init" data-stagger="5">
+            <a href="contact.html" class="btn-primary">เริ่มต้นโปรเจกต์กับเรา</a>
+            <a href="works.html" class="btn-outline">ดูผลงาน</a>
+          </div>
+        </div>
+        <div class="hero-visual stagger-init" data-stagger="3">
+          <div class="hero-glow"></div>
+          <img src="assets/images/hero_3d_abstract.png" alt="3D abstract architecture visual">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-section">
+    <div class="marquee-wrapper">
+      <div class="marquee-track">
+        <span class="marquee-item">High Performance <span class="dot"></span></span>
+        <span class="marquee-item">Scalable Architecture <span class="dot"></span></span>
+        <span class="marquee-item">Pixel-Perfect Design <span class="dot"></span></span>
+        <span class="marquee-item">Seamless Integration <span class="dot"></span></span>
+        <span class="marquee-item">SEO Optimized <span class="dot"></span></span>
+        <span class="marquee-item">Real-time Data <span class="dot"></span></span>
+        <span class="marquee-item">Enterprise Grade <span class="dot"></span></span>
+        <!-- duplicate for seamless loop -->
+        <span class="marquee-item">High Performance <span class="dot"></span></span>
+        <span class="marquee-item">Scalable Architecture <span class="dot"></span></span>
+        <span class="marquee-item">Pixel-Perfect Design <span class="dot"></span></span>
+        <span class="marquee-item">Seamless Integration <span class="dot"></span></span>
+        <span class="marquee-item">SEO Optimized <span class="dot"></span></span>
+        <span class="marquee-item">Real-time Data <span class="dot"></span></span>
+        <span class="marquee-item">Enterprise Grade <span class="dot"></span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bento Grid Services -->
+  <section class="bento-section">
+    <div class="container">
+      <div class="bento-heading reveal">
+        <div class="section-label">บริการของเรา</div>
+        <h2>สร้างสิ่งที่<span class="gradient-text"> ยิ่งใหญ่กว่า</span></h2>
+      </div>
+      <div class="bento-grid">
+        <div class="glass-card bento-card reveal delay-1">
+          <div class="card-icon">⚡</div>
+          <div class="card-eyebrow">WordPress Solutions</div>
+          <h3>Enterprise-Grade WordPress</h3>
+          <p>สร้างแพลตฟอร์ม E-Commerce ขนาดใหญ่ หรือ Sales Page ที่เน้นยอดคอนเวอร์ชัน พร้อมโครงสร้างที่รองรับการทำ SEO ขั้นสุด ด้วย WooCommerce ที่ปรับแต่งมาเพื่อประสิทธิภาพสูงสุด</p>
+          <br>
+          <a href="wordpress.html" class="btn-outline" style="font-size:0.85rem; padding:10px 28px;">เรียนรู้เพิ่มเติม →</a>
+        </div>
+        <div class="glass-card bento-card reveal delay-2">
+          <div class="card-icon">🚀</div>
+          <div class="card-eyebrow">Web Application</div>
+          <h3>Custom Web Applications</h3>
+          <p>พัฒนาระบบเฉพาะทางที่ซับซ้อน ดึงข้อมูลแบบ Real-time และเชื่อมต่อ API อย่างไร้รอยต่อ รองรับการขยายตัวของธุรกิจในระยะยาว</p>
+          <br>
+          <a href="webapp.html" class="btn-outline" style="font-size:0.85rem; padding:10px 28px;">เรียนรู้เพิ่มเติม →</a>
+        </div>
+        <div class="glass-card bento-card reveal delay-3" style="background: linear-gradient(135deg, rgba(200,16,46,0.08) 0%, rgba(139,0,0,0.08) 100%);">
+          <div class="card-eyebrow">Why Choose Us</div>
+          <h3 style="font-size:1.3rem;">ทำไมต้องเลือกเรา?</h3>
+          <ul style="list-style:none; margin-top:16px; display:flex; flex-direction:column; gap:12px;">
+            <li style="display:flex; gap:12px; align-items:flex-start;"><span style="color:var(--accent-start); font-size:1.1rem; flex-shrink:0;">✓</span><span>ออกแบบและพัฒนาด้วยทีมผู้เชี่ยวชาญที่มีประสบการณ์จริง</span></li>
+            <li style="display:flex; gap:12px; align-items:flex-start;"><span style="color:var(--accent-start); font-size:1.1rem; flex-shrink:0;">✓</span><span>โค้ดสะอาด ดูแลรักษาง่าย พร้อมเอกสารประกอบ</span></li>
+            <li style="display:flex; gap:12px; align-items:flex-start;"><span style="color:var(--accent-start); font-size:1.1rem; flex-shrink:0;">✓</span><span>มุ่งเน้นผลลัพธ์ทางธุรกิจที่วัดผลได้จริง</span></li>
+          </ul>
+        </div>
+        <div class="glass-card bento-card reveal delay-4">
+          <div class="card-eyebrow">Process</div>
+          <h3 style="font-size:1.3rem;">กระบวนการทำงาน</h3>
+          <div style="display:flex; flex-direction:column; gap:16px; margin-top:16px;">
+            <div style="display:flex; gap:16px; align-items:center;">
+              <span style="width:32px; height:32px; background:var(--gradient); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.8rem; flex-shrink:0;">01</span>
+              <span>Discovery & Requirement Analysis</span>
+            </div>
+            <div style="display:flex; gap:16px; align-items:center;">
+              <span style="width:32px; height:32px; background:var(--gradient); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.8rem; flex-shrink:0;">02</span>
+              <span>UI/UX Design & Architecture Planning</span>
+            </div>
+            <div style="display:flex; gap:16px; align-items:center;">
+              <span style="width:32px; height:32px; background:var(--gradient); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.8rem; flex-shrink:0;">03</span>
+              <span>Development & Testing</span>
+            </div>
+            <div style="display:flex; gap:16px; align-items:center;">
+              <span style="width:32px; height:32px; background:var(--gradient); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.8rem; flex-shrink:0;">04</span>
+              <span>Launch & Ongoing Support</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Band -->
+  <section style="padding: 40px 0 120px;">
+    <div class="container">
+      <div class="cta-band reveal">
+        <div class="section-label" style="justify-content:center;">พร้อมเริ่มต้นแล้ว?</div>
+        <h2>มีไอเดียอยู่ในใจ?</h2>
+        <p>เล่าให้เราฟังสิ — ไม่ว่าจะเป็นเว็บไซต์ธุรกิจ หรือระบบ Web App ที่ซับซ้อน เราพร้อมช่วยให้มันเป็นจริง</p>
+        <a href="contact.html" class="btn-primary">เริ่มต้นโปรเจกต์กับเรา</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <a class="footer-logo" href="index.html"><span>Nexarc</span> Studio</a>
+        <ul class="footer-links">
+          <li><a href="wordpress.html">WordPress</a></li>
+          <li><a href="webapp.html">Web App</a></li>
+          <li><a href="works.html">ผลงาน</a></li>
+          <li><a href="contact.html">ติดต่อ</a></li>
+        </ul>
+      </div>
+      <p class="footer-copy">© 2026 Nexarc Studio. สงวนลิขสิทธิ์ทุกประการ</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
