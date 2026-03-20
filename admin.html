@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Nexarc Studio</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --admin-bg: #0a0a0a;
+      --card-bg: rgba(255,255,255,0.05);
+    }
+    body { background: var(--admin-bg); color: #fff; }
+    .admin-container { max-width: 1000px; margin: 40px auto; padding: 20px; }
+    .admin-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px; margin-bottom: 32px; }
+    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+    
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { text-align: left; padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    th { color: var(--text-body); font-size: 0.9rem; text-transform: uppercase; }
+    
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; margin-bottom: 8px; color: var(--text-body); }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 12px; color: #fff; font-family: inherit;
+    }
+    .form-group textarea { height: 100px; resize: vertical; }
+    
+    .btn-save { background: var(--gradient); color: #fff; border: none; padding: 12px 32px; border-radius: 100px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+    .btn-save:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(200,16,46,0.3); }
+    .btn-delete { background: rgba(200,16,46,0.1); color: #ff4d4d; border: 1px solid rgba(200,16,46,0.2); padding: 8px 16px; border-radius: 6px; cursor: pointer; }
+    .btn-delete:hover { background: #ff4d4d; color: #fff; }
+    
+    .login-overlay { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; }
+    .login-box { background: var(--card-bg); padding: 40px; border-radius: 20px; text-align: center; width: 400px; }
+    
+    .thumb-preview { width: 60px; height: 40px; border-radius: 4px; object-fit: cover; }
+    
+    #statusMsg { position: fixed; bottom: 20px; right: 20px; padding: 16px 24px; border-radius: 8px; z-index: 1000; display: none; }
+    .msg-success { background: #10b981; color: #fff; }
+    .msg-error { background: #ef4444; color: #fff; }
+  </style>
+</head>
+<body>
+
+  <!-- Login Overlay -->
+  <div id="loginOverlay" class="login-overlay">
+    <div class="login-box">
+      <h2 style="margin-bottom:24px;">Admin Access</h2>
+      <input type="password" id="adminPass" placeholder="รหัสผ่านหลังบ้าน" style="width:100%; padding:14px; border-radius:8px; border:1px solid #444; background:#222; color:#fff; margin-bottom:20px;">
+      <button onclick="checkAuth()" class="btn-save" style="width:100%;">เข้าสู่ระบบ</button>
+      <p id="loginError" style="color:#ff4d4d; margin-top:16px; font-size:0.9rem; display:none;">รหัสผ่านไม่ถูกต้อง</p>
+    </div>
+  </div>
+
+  <div class="admin-container">
+    <div class="admin-header">
+      <h1>Projects <span class="gradient-text">Management</span></h1>
+      <a href="works.html" target="_blank" style="color:var(--text-body); text-decoration:none;">ไปที่หน้าเว็บ →</a>
+    </div>
+
+    <!-- Add Form -->
+    <div class="admin-card">
+      <h3 style="margin-bottom:24px;">เพิ่มผลงานใหม่</h3>
+      <form id="projectForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>ชื่อโปรเจกต์</label>
+            <input type="text" id="title" required placeholder="เช่น Next-gen E-Commerce">
+          </div>
+          <div class="form-group">
+            <label>หมวดหมู่</label>
+            <select id="category">
+              <option value="Web Application">Web Application</option>
+              <option value="WordPress Site">WordPress Site</option>
+              <option value="Data Platform">Data Platform</option>
+              <option value="Mobile App">Mobile App</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>รายละเอียด</label>
+          <textarea id="description" required placeholder="เล่าเกี่ยวกับงานนี้สั้นๆ..."></textarea>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>ลิงก์เว็บไซต์ (ถ้ามี)</label>
+            <input type="url" id="project_url" placeholder="https://example.com">
+          </div>
+          <div class="form-group">
+            <label>รูปภาพผลงาน</label>
+            <input type="file" id="imageFile" accept="image/*" required>
+            <p style="font-size:0.8rem; color:var(--text-body); margin-top:8px;">แนะนำขนาด 1200x800px</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Tags (คั่นด้วยคอมม่า ,)</label>
+          <input type="text" id="tags" placeholder="React, Python, AWS">
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-save">บันทึกผลงาน</button>
+      </form>
+    </div>
+
+    <!-- List -->
+    <div class="admin-card">
+      <h3 style="margin-bottom:24px;">รายการผลงานปัจจุบัน</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>รูป</th>
+            <th>ชื่อโปรเจกต์</th>
+            <th>หมวดหมู่</th>
+            <th>จัดการ</th>
+          </tr>
+        </thead>
+        <tbody id="projectListBody">
+          <!-- Rows injected here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="statusMsg"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseUrl = 'https://dmlmntzgqfygmbxenywk.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtbG1udHpncWZ5Z21ieGVueXdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwMDI2OTEsImV4cCI6MjA4OTU3ODY5MX0.GEeyFyfxng9KoOfs6Ojvrv0oGFfU0RYDE0L4B4bv-oI';
+    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Simple Password Check (ให้ผู้ใช้เปลี่ยนเองภายหลัง หรือใช้ Supabase Auth ถ้าจริงจัง)
+    function checkAuth() {
+      const pass = document.getElementById('adminPass').value;
+      if (pass === 'nexarc2026') { // รหัสผ่านตั้งต้น
+        document.getElementById('loginOverlay').style.display = 'none';
+        localStorage.setItem('adminAccess', 'true');
+        loadProjects();
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+      }
+    }
+
+    if (localStorage.getItem('adminAccess') === 'true') {
+      document.getElementById('loginOverlay').style.display = 'none';
+      loadProjects();
+    }
+
+    async function loadProjects() {
+      const tbody = document.getElementById('projectListBody');
+      const { data, error } = await supabaseClient.from('projects').select('*').order('created_at', { ascending: false });
+      
+      if (error) return showStatus('โหลดข้อมูลไม่สำเร็จ', 'error');
+      
+      tbody.innerHTML = data.map(p => `
+        <tr>
+          <td><img src="${p.image_url}" class="thumb-preview"></td>
+          <td>${p.title}</td>
+          <td>${p.category}</td>
+          <td><button class="btn-delete" onclick="deleteProject('${p.id}', '${p.image_url}')">ลบ</button></td>
+        </tr>
+      `).join('');
+    }
+
+    const form = document.getElementById('projectForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.innerText = 'กำลังบันทึก...';
+
+      try {
+        const file = document.getElementById('imageFile').files[0];
+        const fileName = `${Date.now()}-${file.name}`;
+        
+        // 1. Upload Image to Storage
+        const { data: uploadData, error: uploadError } = await supabaseClient.storage
+          .from('project-images')
+          .upload(fileName, file);
+
+        if (uploadError) throw uploadError;
+
+        // 2. Get Public URL
+        const { data: publicUrlData } = supabaseClient.storage
+          .from('project-images')
+          .getPublicUrl(fileName);
+        
+        const imageUrl = publicUrlData.publicUrl;
+
+        // 3. Save to Projects Table
+        const projectData = {
+          title: document.getElementById('title').value,
+          description: document.getElementById('description').value,
+          category: document.getElementById('category').value,
+          project_url: document.getElementById('project_url').value,
+          image_url: imageUrl,
+          tags: document.getElementById('tags').value.split(',').map(t => t.trim())
+        };
+
+        const { error: insertError } = await supabaseClient.from('projects').insert([projectData]);
+        if (insertError) throw insertError;
+
+        showStatus('บันทึกผลงานสำเร็จแล้ว!', 'success');
+        form.reset();
+        loadProjects();
+
+      } catch (err) {
+        console.error(err);
+        showStatus('เกิดข้อผิดพลาด: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'บันทึกผลงาน';
+      }
+    });
+
+    async function deleteProject(id, imageUrl) {
+      if (!confirm('ยืนยันที่จะลบโปรเจกต์นี้?')) return;
+      
+      const { error } = await supabaseClient.from('projects').delete().eq('id', id);
+      if (error) return showStatus('ลบไม่สำเร็จ', 'error');
+      
+      showStatus('ลบผลงานออกแล้ว', 'success');
+      loadProjects();
+    }
+
+    function showStatus(msg, type) {
+      const div = document.getElementById('statusMsg');
+      div.innerText = msg;
+      div.className = type === 'success' ? 'msg-success' : 'msg-error';
+      div.style.display = 'block';
+      setTimeout(() => div.style.display = 'none', 3000);
+    }
+  </script>
+</body>
+</html>
