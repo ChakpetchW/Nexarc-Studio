@@ -1,7 +1,5 @@
-/**
- * main.js — Shared interactions
- * Encoding: UTF-8
- */
+// ── JS Enabled Check ──────────────────────────────────────
+document.body.classList.add('js-enabled');
 
 // ── Custom Cursor ──────────────────────────────────────────
 const cursor      = document.getElementById('cursor');
@@ -32,6 +30,18 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal, .reveal-left, .reveal-img').forEach(el => {
   revealObserver.observe(el);
+});
+
+// Trigger reveal for elements already in viewport
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-img').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        el.classList.add('visible');
+      }
+    });
+  }, 150);
 });
 
 // ── Navbar Scroll Effect ───────────────────────────────────

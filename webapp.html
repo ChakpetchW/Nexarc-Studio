@@ -13,6 +13,7 @@
 
   <nav class="navbar">
     <a class="logo" href="index.html"><span>Nexarc</span> Studio</a>
+    <ul class="nav-links">
       <li><a href="index.html">หน้าหลัก</a></li>
       <li><a href="wordpress.html">WordPress</a></li>
       <li><a href="webapp.html" class="active">Web App</a></li>
@@ -37,8 +38,8 @@
   <!-- Hero -->
   <section style="min-height:100vh; display:flex; align-items:center; padding-top:var(--nav-h); overflow:hidden;">
     <div class="container">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;">
-        <div>
+      <div class="app-hero-inner">
+        <div class="app-content">
           <div class="section-label reveal">Custom Web Applications</div>
           <h1 class="reveal delay-1">Beyond<br><span class="gradient-text">Standard Limits.</span></h1>
           <p class="reveal delay-2" style="max-width:480px; margin: 24px 0 40px;">
@@ -47,7 +48,7 @@
           </p>
           <a href="contact.html" class="btn-primary reveal delay-3">ปรึกษาโปรเจกต์ฟรี</a>
         </div>
-        <div class="reveal delay-2">
+        <div class="app-visual reveal delay-2">
           <div class="node-canvas">
             <canvas id="nodeCanvas"></canvas>
           </div>
