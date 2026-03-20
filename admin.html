@@ -31,6 +31,7 @@
     
     .btn-save { background: var(--gradient); color: #fff; border: none; padding: 12px 32px; border-radius: 100px; font-weight: 700; cursor: pointer; transition: 0.3s; }
     .btn-save:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(200,16,46,0.3); }
+    .btn-edit { color: var(--accent-start); border: none; background: none; cursor: pointer; font-weight: bold; margin-right: 12px; }
     .btn-delete { background: rgba(200,16,46,0.1); color: #ff4d4d; border: 1px solid rgba(200,16,46,0.2); padding: 8px 16px; border-radius: 6px; cursor: pointer; }
     .btn-delete:hover { background: #ff4d4d; color: #fff; }
     
@@ -42,6 +43,9 @@
     #statusMsg { position: fixed; bottom: 20px; right: 20px; padding: 16px 24px; border-radius: 8px; z-index: 1000; display: none; }
     .msg-success { background: #10b981; color: #fff; }
     .msg-error { background: #ef4444; color: #fff; }
+
+    #formTitle { margin-bottom: 24px; }
+    .cancel-edit { color: #888; text-decoration: underline; cursor: pointer; font-size: 0.9rem; margin-left: 15px; display: none; }
   </style>
 </head>
 <body>
@@ -62,22 +66,25 @@
       <a href="works.html" target="_blank" style="color:var(--text-body); text-decoration:none;">ไปที่หน้าเว็บ →</a>
     </div>
 
-    <!-- Add Form -->
+    <!-- Form -->
     <div class="admin-card">
-      <h3 style="margin-bottom:24px;">เพิ่มผลงานใหม่</h3>
+      <h3 id="formTitle">เพิ่มผลงานใหม่ <span class="cancel-edit" id="cancelEdit" onclick="resetForm()">ยกเลิกการแก้ไข</span></h3>
       <form id="projectForm">
+        <input type="hidden" id="editingId">
+        <input type="hidden" id="existingImageUrl">
+
         <div class="form-grid">
           <div class="form-group">
             <label>ชื่อโปรเจกต์</label>
-            <input type="text" id="title" required placeholder="เช่น Next-gen E-Commerce">
+            <input type="text" id="title" required placeholder="เช่น Angelishoes Experience">
           </div>
           <div class="form-group">
             <label>หมวดหมู่</label>
             <select id="category">
               <option value="Web Application">Web Application</option>
               <option value="WordPress Site">WordPress Site</option>
+              <option value="E-Commerce">E-Commerce</option>
               <option value="Data Platform">Data Platform</option>
-              <option value="Mobile App">Mobile App</option>
             </select>
           </div>
         </div>
@@ -93,15 +100,21 @@
             <input type="url" id="project_url" placeholder="https://example.com">
           </div>
           <div class="form-group">
-            <label>รูปภาพผลงาน</label>
-            <input type="file" id="imageFile" accept="image/*" required>
-            <p style="font-size:0.8rem; color:var(--text-body); margin-top:8px;">แนะนำขนาด 1200x800px</p>
+            <label>วันที่แสดง (เช่น มีนาคม 2567)</label>
+            <input type="text" id="project_date" placeholder="เช่น มีนาคม 2567" required>
           </div>
         </div>
 
-        <div class="form-group">
-          <label>Tags (คั่นด้วยคอมม่า ,)</label>
-          <input type="text" id="tags" placeholder="React, Python, AWS">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>รูปภาพผลงาน (เลือกใหม่เมื่อต้องการเปลี่ยน)</label>
+            <input type="file" id="imageFile" accept="image/*">
+            <p style="font-size:0.8rem; color:var(--text-body); margin-top:8px;">แนะนำ 1200x800px</p>
+          </div>
+          <div class="form-group">
+            <label>Tags (คั่นด้วยคอมม่า ,)</label>
+            <input type="text" id="tags" placeholder="React, Python, AWS">
+          </div>
         </div>
 
         <button type="submit" id="submitBtn" class="btn-save">บันทึกผลงาน</button>
@@ -116,7 +129,7 @@
           <tr>
             <th>รูป</th>
             <th>ชื่อโปรเจกต์</th>
-            <th>หมวดหมู่</th>
+            <th>วันที่</th>
             <th>จัดการ</th>
           </tr>
         </thead>
@@ -135,10 +148,9 @@
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtbG1udHpncWZ5Z21ieGVueXdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwMDI2OTEsImV4cCI6MjA4OTU3ODY5MX0.GEeyFyfxng9KoOfs6Ojvrv0oGFfU0RYDE0L4B4bv-oI';
     const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-    // Simple Password Check (ให้ผู้ใช้เปลี่ยนเองภายหลัง หรือใช้ Supabase Auth ถ้าจริงจัง)
     function checkAuth() {
       const pass = document.getElementById('adminPass').value;
-      if (pass === 'nexarc2026') { // รหัสผ่านตั้งต้น
+      if (pass === 'nexarc2026') {
         document.getElementById('loginOverlay').style.display = 'none';
         localStorage.setItem('adminAccess', 'true');
         loadProjects();
@@ -162,69 +174,99 @@
         <tr>
           <td><img src="${p.image_url}" class="thumb-preview"></td>
           <td>${p.title}</td>
-          <td>${p.category}</td>
-          <td><button class="btn-delete" onclick="deleteProject('${p.id}', '${p.image_url}')">ลบ</button></td>
+          <td>${p.project_date || 'N/A'}</td>
+          <td>
+            <button class="btn-edit" onclick='editProject(${JSON.stringify(p).replace(/'/g, "&apos;")})'>แก้ไข</button>
+            <button class="btn-delete" onclick="deleteProject('${p.id}')">ลบ</button>
+          </td>
         </tr>
       `).join('');
+    }
+
+    function editProject(p) {
+      document.getElementById('editingId').value = p.id;
+      document.getElementById('title').value = p.title;
+      document.getElementById('category').value = p.category;
+      document.getElementById('description').value = p.description;
+      document.getElementById('project_url').value = p.project_url || '';
+      document.getElementById('project_date').value = p.project_date || '';
+      document.getElementById('tags').value = p.tags ? p.tags.join(', ') : '';
+      document.getElementById('existingImageUrl').value = p.image_url;
+      
+      document.getElementById('formTitle').innerText = 'แก้ไขผลงาน: ' + p.title;
+      document.getElementById('cancelEdit').style.display = 'inline';
+      document.getElementById('submitBtn').innerText = 'อัปเดตผลงาน';
+      document.getElementById('imageFile').required = false;
+      
+      window.scrollTo(0, 0);
+    }
+
+    function resetForm() {
+      form.reset();
+      document.getElementById('editingId').value = '';
+      document.getElementById('formTitle').innerHTML = 'เพิ่มผลงานใหม่ <span class="cancel-edit" id="cancelEdit" onclick="resetForm()">ยกเลิกการแก้ไข</span>';
+      document.getElementById('submitBtn').innerText = 'บันทึกผลงาน';
+      document.getElementById('imageFile').required = true;
     }
 
     const form = document.getElementById('projectForm');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
+      const editingId = document.getElementById('editingId').value;
+      
       btn.disabled = true;
-      btn.innerText = 'กำลังบันทึก...';
+      btn.innerText = 'กำลังประมวลผล...';
 
       try {
+        let imageUrl = document.getElementById('existingImageUrl').value;
         const file = document.getElementById('imageFile').files[0];
-        const fileName = `${Date.now()}-${file.name}`;
-        
-        // 1. Upload Image to Storage
-        const { data: uploadData, error: uploadError } = await supabaseClient.storage
-          .from('project-images')
-          .upload(fileName, file);
 
-        if (uploadError) throw uploadError;
+        if (file) {
+          const fileName = `${Date.now()}-${file.name}`;
+          const { data: uploadData, error: uploadError } = await supabaseClient.storage
+            .from('project-images').upload(fileName, file);
+          if (uploadError) throw uploadError;
+          const { data: publicUrlData } = supabaseClient.storage
+            .from('project-images').getPublicUrl(fileName);
+          imageUrl = publicUrlData.publicUrl;
+        }
 
-        // 2. Get Public URL
-        const { data: publicUrlData } = supabaseClient.storage
-          .from('project-images')
-          .getPublicUrl(fileName);
-        
-        const imageUrl = publicUrlData.publicUrl;
-
-        // 3. Save to Projects Table
         const projectData = {
           title: document.getElementById('title').value,
           description: document.getElementById('description').value,
           category: document.getElementById('category').value,
           project_url: document.getElementById('project_url').value,
+          project_date: document.getElementById('project_date').value,
           image_url: imageUrl,
-          tags: document.getElementById('tags').value.split(',').map(t => t.trim())
+          tags: document.getElementById('tags').value.split(',').map(t => t.trim()).filter(t => t)
         };
 
-        const { error: insertError } = await supabaseClient.from('projects').insert([projectData]);
-        if (insertError) throw insertError;
+        if (editingId) {
+          const { error } = await supabaseClient.from('projects').update(projectData).eq('id', editingId);
+          if (error) throw error;
+          showStatus('อัปเดตผลงานสำเร็จ!', 'success');
+        } else {
+          const { error } = await supabaseClient.from('projects').insert([projectData]);
+          if (error) throw error;
+          showStatus('บันทึกผลงานสำเร็จ!', 'success');
+        }
 
-        showStatus('บันทึกผลงานสำเร็จแล้ว!', 'success');
-        form.reset();
+        resetForm();
         loadProjects();
 
       } catch (err) {
-        console.error(err);
         showStatus('เกิดข้อผิดพลาด: ' + err.message, 'error');
       } finally {
         btn.disabled = false;
-        btn.innerText = 'บันทึกผลงาน';
+        btn.innerText = editingId ? 'อัปเดตผลงาน' : 'บันทึกผลงาน';
       }
     });
 
-    async function deleteProject(id, imageUrl) {
+    async function deleteProject(id) {
       if (!confirm('ยืนยันที่จะลบโปรเจกต์นี้?')) return;
-      
       const { error } = await supabaseClient.from('projects').delete().eq('id', id);
       if (error) return showStatus('ลบไม่สำเร็จ', 'error');
-      
       showStatus('ลบผลงานออกแล้ว', 'success');
       loadProjects();
     }

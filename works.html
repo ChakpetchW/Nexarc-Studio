@@ -6,6 +6,18 @@
   <meta name="description" content="ผลงานของ Nexarc Studio — Web Application และ WordPress Solutions ระดับพรีเมียม">
   <title>Selected Works — Nexarc Studio</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Fix image revealing which sometimes fails for dynamic content */
+    .project-image-wrap img {
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .project-image-wrap.loaded img {
+      opacity: 1;
+      transform: scale(1);
+    }
+  </style>
 </head>
 <body>
   <div id="cursor"></div>
@@ -48,7 +60,6 @@
   <!-- Projects -->
   <section style="padding-top:60px; min-height: 400px;">
     <div class="container" id="projectList">
-      <!-- Dynamic Projects will be injected here -->
       <div id="loading" style="text-align:center; padding: 100px 0;">
         <p style="color:var(--text-body);">กำลังโหลดผลงาน...</p>
       </div>
@@ -93,52 +104,42 @@
 
     async function fetchProjects() {
       const container = document.getElementById('projectList');
-      
       try {
         const { data: projects, error } = await supabaseClient
-          .from('projects')
-          .select('*')
-          .order('created_at', { ascending: false });
+          .from('projects').select('*').order('created_at', { ascending: false });
 
         if (error) throw error;
-
-        container.innerHTML = ''; // Clear loading
+        container.innerHTML = '';
 
         if (!projects || projects.length === 0) {
-          container.innerHTML = `
-            <div style="text-align:center; padding: 100px 0;">
-              <h3 style="margin-bottom:16px;">ยังไม่มีผลงานในระบบ</h3>
-              <p style="color:var(--text-body); margin-bottom: 24px;">คุณสามารถเพิ่มผลงานใหม่ได้ผ่านทางหน้า Admin</p>
-              <a href="contact.html" class="btn-primary">สนใจร่วมงานกับเรา →</a>
-            </div>
-          `;
+          container.innerHTML = `<div style="text-align:center; padding: 100px 0;"><h3>ยังไม่มีผลงานในระบบ</h3></div>`;
           return;
         }
 
         projects.forEach((proj, index) => {
           const isReverse = index % 2 !== 0;
           const num = (index + 1).toString().padStart(2, '0');
-          const tagsStr = proj.tags ? proj.tags.join(' / ') : proj.category;
+          const tagsStr = (proj.tags && proj.tags.length > 0) ? proj.tags.join(' / ') : proj.category;
           
           const projectHTML = `
             <div class="project-block ${isReverse ? 'reverse' : ''}">
-              <div class="project-image-wrap reveal-img">
-                <img src="${proj.image_url || 'assets/images/placeholder.png'}" alt="${proj.title}">
+              <div class="project-image-wrap" id="wrap-${proj.id}">
+                <img src="${proj.image_url}" alt="${proj.title}" onload="document.getElementById('wrap-${proj.id}').classList.add('loaded')">
                 <div class="project-overlay"></div>
               </div>
               <div class="project-content">
                 <div class="project-num">${num}</div>
-                <div class="project-tag">${tagsStr}</div>
+                <div class="project-tag">${tagsStr.toUpperCase()}</div>
                 <h2>${proj.title}</h2>
                 <p>${proj.description}</p>
                 <div class="project-meta">
                   <div class="meta-item">
                     <span class="meta-label">หมวดหมู่</span>
-                    <span class="meta-val">${proj.category || 'Architecture'}</span>
+                    <span class="meta-val">${proj.category}</span>
                   </div>
                   <div class="meta-item">
                     <span class="meta-label">วันที่</span>
-                    <span class="meta-val">${new Date(proj.created_at).toLocaleDateString('th-TH', { month: 'long', year: 'numeric' })}</span>
+                    <span class="meta-val">${proj.project_date || 'เร็วๆ นี้'}</span>
                   </div>
                 </div>
                 <span class="magnetic-btn">
@@ -153,11 +154,10 @@
         });
 
       } catch (err) {
-        console.error('Error fetching projects:', err);
-        container.innerHTML = '<p style="text-align:center; padding:100px 0; color:var(--accent-start);">ขออภัย เกิดข้อผิดพลาดในการโหลดข้อมูล</p>';
+        console.error(err);
+        container.innerHTML = '<p style="text-align:center; color:red;">Error loading data.</p>';
       }
     }
-
     fetchProjects();
   </script>
 </body>
